@@ -164,14 +164,14 @@ public class MySqlValidator extends DatabaseValidator implements AutoCloseable {
 
     private String[] getRequiredPrivileges() {
         if (isCdcSourceJob) {
-            return new String[] {"SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT"};
+            return new String[] {"SELECT", "REPLICATION SLAVE", "BINLOG MONITOR"};
         } else if (isBackfillTable) {
             // check privilege again to ensure the user has the privilege to backfill
-            return new String[] {"SELECT", "REPLICATION SLAVE", "REPLICATION CLIENT"};
+            return new String[] {"SELECT", "REPLICATION SLAVE", "BINLOG MONITOR"};
         } else {
             // dedicated source needs more privileges to acquire global lock
             return new String[] {
-                "SELECT", "RELOAD", "SHOW DATABASES", "REPLICATION SLAVE", "REPLICATION CLIENT"
+                "SELECT", "RELOAD", "SHOW DATABASES", "REPLICATION SLAVE", "BINLOG MONITOR"
             };
         }
     }
